@@ -13,9 +13,9 @@ export default function DonorDashboard() {
   const [requests, setRequests] = useState([])
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
-  const [pushState, setPushState] = useState(
-    typeof Notification !== 'undefined' && Notification.permission === 'granted' ? 'on' : 'off'
-  )
+  // 'off' until we have actually saved a subscription for this donor —
+  // browser permission alone doesn't mean the database has one.
+  const [pushState, setPushState] = useState('off')
 
   async function enableAlerts() {
     setPushState('busy')
@@ -36,6 +36,13 @@ export default function DonorDashboard() {
       const [p, r] = await Promise.all([getMyProfile(phone, pin), getMyRequests(phone, pin)])
       setProfile(p)
       setRequests(r || [])
+      // Permission already granted: silently re-save the subscription so the
+      // database always has a current one for this device (no prompt shown).
+      if (pushSupported() && typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+        enablePushForDonor(phone, pin)
+          .then(() => setPushState('on'))
+          .catch(() => setPushState('off'))
+      }
     } catch (err) {
       setError(err.message || 'Could not load your profile.')
       setProfile(null)
