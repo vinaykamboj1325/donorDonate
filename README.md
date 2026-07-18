@@ -30,6 +30,7 @@ Built with **React (Vite)** + **Supabase** (free tier).
 1. In your project, open **SQL Editor → New query**.
 2. Copy everything from [`supabase/schema.sql`](supabase/schema.sql) and paste it in.
 3. Click **Run**. You should see "Success".
+4. Repeat with [`supabase/migration-pin.sql`](supabase/migration-pin.sql) (adds PIN login).
 
 ### 3. Add your keys
 1. Open **Project Settings → API**.
@@ -51,9 +52,10 @@ Open http://localhost:5173
 
 ## Using the app
 - **Find donors** — pick blood group + city/area, see who's available now, send a request.
-- **Become a donor** — register (your phone stays private).
-- **Donor dashboard** — enter your registered phone, toggle availability, see requests,
-  and reply to seekers on WhatsApp.
+- **Become a donor** — register with a secret 4-6 digit PIN (your phone stays private).
+- **Donor dashboard** — log in with phone + PIN, toggle availability, see requests,
+  and reply to seekers on WhatsApp. PINs are stored only as bcrypt hashes
+  (see [`supabase/migration-pin.sql`](supabase/migration-pin.sql)).
 
 ## Tech
 | Layer | Choice |
@@ -64,8 +66,8 @@ Open http://localhost:5173
 | Hosting | Deploy the `dist/` build free on Vercel / Netlify / Cloudflare Pages |
 
 ## Roadmap / production hardening
-- Replace phone-as-key dashboard with **Supabase phone OTP auth**.
-- Add rate limiting on `create_request` to prevent spam.
+- Upgrade phone+PIN login to **SMS OTP** (needs a paid provider like Twilio).
+- Add rate limiting on `create_request` and PIN attempts to prevent abuse.
 - Optional server-side WhatsApp/SMS notifications to donors (Supabase Edge Function).
 - Map view + distance sorting.
 - Compatibility hints (which blood groups can donate to which).
