@@ -1,6 +1,7 @@
-// BloodLink Edge Function: send a web push to the donor when a request is created.
+// Hemyra Edge Function: send a web push to the donor when a request is created.
 // Deploy: supabase functions deploy notify-donor --no-verify-jwt
-// Secrets needed: VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY
+// Secrets needed: VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY (and SB_SECRET_KEY on
+// projects without the legacy service-role JWT).
 import { createClient } from "npm:@supabase/supabase-js@2";
 import webpush from "npm:web-push@3.6.7";
 
@@ -11,11 +12,11 @@ const cors = {
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+  Deno.env.get("SB_SECRET_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
 );
 
 webpush.setVapidDetails(
-  "mailto:notifications@bloodlink.app",
+  "mailto:notifications@hemyra.app",
   Deno.env.get("VAPID_PUBLIC_KEY")!,
   Deno.env.get("VAPID_PRIVATE_KEY")!,
 );
