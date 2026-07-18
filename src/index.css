@@ -38,13 +38,15 @@ body {
 
 ::selection { background: rgba(225, 29, 72, 0.18); }
 
-.container { width: 100%; max-width: 980px; margin: 0 auto; padding: 0 18px; position: relative; z-index: 1; }
+.container { width: 100%; max-width: 980px; margin: 0 auto; padding: 0 18px; position: relative; }
 
 /* ---------- Animated aurora backdrop ---------- */
 .bg-scene {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  /* Below everything; a positive z-index here forces stacking contexts on
+     .container/.header/.footer that trap the modal under the footer. */
+  z-index: -1;
   pointer-events: none;
   overflow: hidden;
   background:
@@ -104,7 +106,6 @@ body {
 /* ---------- Header / hero ---------- */
 .header {
   position: relative;
-  z-index: 1;
   padding: 44px 0 30px;
 }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
@@ -469,7 +470,7 @@ input[type="checkbox"] { accent-color: var(--red); }
 }
 .success { text-align: center; padding: 12px; }
 .success .big { font-size: 48px; }
-.footer { text-align: center; color: var(--muted); font-size: 13px; padding: 28px 16px 36px; position: relative; z-index: 1; }
+.footer { text-align: center; color: var(--muted); font-size: 13px; padding: 28px 16px 36px; position: relative; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 720px) {
