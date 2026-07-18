@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { getMyProfile, getMyRequests, setAvailability, updateRequestStatus } from '../api'
 import { isConfigured } from '../supabaseClient'
 import { URGENCY } from '../constants'
+import { pushSupported, enablePushForDonor } from '../push'
 
 const waLink = (num) => `https://wa.me/${String(num).replace(/[^0-9]/g, '')}`
 
@@ -12,6 +13,20 @@ export default function DonorDashboard() {
   const [requests, setRequests] = useState([])
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [pushState, setPushState] = useState(
+    typeof Notification !== 'undefined' && Notification.permission === 'granted' ? 'on' : 'off'
+  )
+
+  async function enableAlerts() {
+    setPushState('busy')
+    try {
+      await enablePushForDonor(phone, pin)
+      setPushState('on')
+    } catch (err) {
+      setError(err.message)
+      setPushState('off')
+    }
+  }
 
   async function load(e) {
     e?.preventDefault()
@@ -103,6 +118,18 @@ export default function DonorDashboard() {
             </span>
           </label>
         </div>
+        {pushSupported() && pushState !== 'on' && (
+          <div className="push-banner">
+            <span>🔔 Get an instant alert on this device when someone needs your blood.</span>
+            <button className="btn primary sm" onClick={enableAlerts} disabled={pushState === 'busy'}>
+              {pushState === 'busy' ? 'Enabling…' : 'Enable notifications'}
+            </button>
+          </div>
+        )}
+        {pushSupported() && pushState === 'on' && (
+          <p className="muted small note">🔔 Request alerts are ON for this device.</p>
+        )}
+        {error && <div className="alert error">{error}</div>}
       </div>
 
       <h3 className="section-title">Requests for you ({requests.length})</h3>

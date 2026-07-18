@@ -178,6 +178,22 @@ input:focus, select:focus, textarea:focus {
 .badge.declined { background: #fee2e2; color: var(--red-dark); }
 .quote { font-style: italic; color: #374151; }
 
+/* Push banner */
+.push-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #9a3412;
+}
+
 /* Switch */
 .switch { display: flex; align-items: center; gap: 8px; margin: 0; cursor: pointer; }
 .switch input { width: 40px; height: 22px; }

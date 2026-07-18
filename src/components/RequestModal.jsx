@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { createRequest } from '../api'
 import { URGENCY } from '../constants'
+import { notifyDonor } from '../push'
 
 export default function RequestModal({ donor, onClose }) {
   const [form, setForm] = useState({
@@ -22,7 +23,8 @@ export default function RequestModal({ donor, onClose }) {
     setBusy(true)
     setError('')
     try {
-      await createRequest({ donorId: donor.id, ...form })
+      const requestId = await createRequest({ donorId: donor.id, ...form })
+      notifyDonor(requestId)
       setDone(true)
     } catch (err) {
       setError(err.message || 'Could not send request.')
