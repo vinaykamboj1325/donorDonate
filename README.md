@@ -1,4 +1,4 @@
-# 🩸 BloodLink — Blood & Plasma Donor Finder
+# 🩸 Hemyra — Blood & Plasma Donor Finder
 
 A privacy-first web app to find verified blood and plasma donors near you.
 Built with **React (Vite)** + **Supabase** (free tier).

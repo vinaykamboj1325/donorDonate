@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "BloodLink — privacy-first blood & plasma donor finder (React + Supabase)",
+  "description": "Hemyra — privacy-first blood & plasma donor finder (React + Supabase)",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

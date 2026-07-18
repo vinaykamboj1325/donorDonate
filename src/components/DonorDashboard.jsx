@@ -94,9 +94,6 @@ export default function DonorDashboard() {
           </button>
         </form>
         {error && <div className="alert error">{error}</div>}
-        <p className="muted small note">
-          🔒 Your PIN is stored only as a bcrypt hash — even the database can't read it back.
-        </p>
       </section>
     )
   }

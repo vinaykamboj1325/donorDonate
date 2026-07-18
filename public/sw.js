@@ -1,4 +1,4 @@
-// BloodLink service worker: shows push notifications for donor requests.
+// Hemyra service worker: shows push notifications for donor requests.
 self.addEventListener('install', () => self.skipWaiting())
 self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()))
 
@@ -7,7 +7,7 @@ self.addEventListener('push', (event) => {
   try {
     data = event.data ? event.data.json() : {}
   } catch {
-    data = { title: 'BloodLink', body: event.data?.text() || 'You have a new blood request.' }
+    data = { title: 'Hemyra', body: event.data?.text() || 'You have a new blood request.' }
   }
   event.waitUntil(
     self.registration.showNotification(data.title || '🩸 New blood request', {
@@ -15,7 +15,7 @@ self.addEventListener('push', (event) => {
       icon: '/icon-192.png',
       badge: '/icon-192.png',
       vibrate: [200, 100, 200],
-      tag: data.tag || 'bloodlink-request',
+      tag: data.tag || 'hemyra-request',
       data: { url: data.url || '/' },
     })
   )

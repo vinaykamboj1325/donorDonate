@@ -16,6 +16,13 @@ export default function App() {
 
   return (
     <div className="app">
+      <div className="bg-scene" aria-hidden="true">
+        <div className="orb o1" />
+        <div className="orb o2" />
+        <div className="orb o3" />
+        <div className="grid-floor" />
+      </div>
+
       <Header />
 
       {!isConfigured && (
@@ -48,7 +55,7 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        BloodLink · privacy-first donor matching · built to save lives
+        Hemyra · connecting donors and lives · privacy-first
       </footer>
     </div>
   )

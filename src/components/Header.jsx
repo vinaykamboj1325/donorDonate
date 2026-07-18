@@ -3,12 +3,17 @@ export default function Header() {
     <header className="header">
       <div className="container header-inner">
         <div className="brand">
-          <span className="logo" aria-hidden="true">🩸</span>
+          <div className="portal" aria-hidden="true">
+            <span className="portal-ring" />
+            <span className="portal-ring r2" />
+            <span className="logo">🩸</span>
+          </div>
           <div>
-            <h1>BloodLink</h1>
+            <h1><span className="grad-text">Hemyra</span></h1>
             <p>Find verified blood &amp; plasma donors near you</p>
           </div>
         </div>
+        <div className="header-tag">⚡ Real-time &nbsp;·&nbsp; 📍 Hyperlocal &nbsp;·&nbsp; 🔒 Privacy-first</div>
       </div>
     </header>
   )
